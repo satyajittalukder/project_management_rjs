@@ -1,8 +1,12 @@
+import { NewProject } from "./components/NewProject";
+import { SideBar } from "./components/SideBar";
+
 function App() {
   return (
-    <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-    </>
+    <main className="flex h-screen my-8 gap-8">
+      <SideBar />
+      <NewProject />
+    </main>
   );
 }
 
