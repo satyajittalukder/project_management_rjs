@@ -16,7 +16,6 @@ const SelectedProject = ({ project, onDelete, onCancel }) => {
             <button onClick={onCancel} className="text-stone-100 bg-stone-900 hover:bg-stone-800 px-6 py-2 rounded-md">Back</button>
             <button onClick={onDelete} className="text-stone-100 bg-red-700 hover:bg-red-600 px-6 py-2 rounded-md">Delete</button>
           </div>
-
         </div>
         <p className="mb-4 text-stone-400">{formattedDate}</p>
         <p className="text-stone-600 whitespace-pre-wrap">{project?.description}</p>
