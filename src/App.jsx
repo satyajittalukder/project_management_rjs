@@ -1,15 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NewProject } from "./components/NewProject";
 import { NoProjectSelected } from "./components/NoProjectSelected";
 import { SideBar } from "./components/SideBar";
 import SelectedProject from "./components/SelectedProject";
 
+const LOCAL_STORAGE_KEY = "projectsState";
+
 function App() {
   let content;
-  const [projectState, setProjectState] = useState({
-    selectedProjectId: undefined,
-    projects: [],
+
+  //initialize projectState with local storage data or default values
+  const [projectState, setProjectState] = useState(() => {
+    const storedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedState ? JSON.parse(storedState) : {
+      selectedProjectId: undefined,
+      projects: [],
+    };
   });
+
+  //save to local storage whenever projectState changes
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(projectState));
+  }, [projectState]);
 
   const cancelHandler = () => {
     setProjectState((prevState) => {
@@ -50,7 +62,7 @@ function App() {
       };
     });
   };
-  
+
   const handleDeleteProject = () => {
     setProjectState((prevState) => {
       return {
@@ -73,7 +85,7 @@ function App() {
     const project = projectState.projects.find(
       (project) => project.id === projectState.selectedProjectId
     );
-    content = <SelectedProject project={project} onDelete={handleDeleteProject} />;
+    content = <SelectedProject onCancel={cancelHandler} project={project} onDelete={handleDeleteProject} />;
   }
 
   return (
