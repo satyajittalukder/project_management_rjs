@@ -7,6 +7,7 @@ const NewTask = ({ onAddTask }) => {
   };
 
   const handleClick = () => {
+    // Validate the input
     if (enteredTask.trim() === "") {
       return;
     }
