@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const NewTask = ({onAddTask}) => {
+const NewTask = ({ onAddTask }) => {
   const [enteredTask, setEnteredTask] = useState("");
   const handleChange = (e) => {
     setEnteredTask(e.target.value);
@@ -8,6 +8,7 @@ const NewTask = ({onAddTask}) => {
 
   const handleClick = () => {
     onAddTask(enteredTask);
+    setEnteredTask("");
   }
   return (
     <div className="flex gap-1">
