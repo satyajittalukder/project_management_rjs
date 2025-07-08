@@ -15,8 +15,32 @@ function App() {
     return storedState ? JSON.parse(storedState) : {
       selectedProjectId: undefined,
       projects: [],
+      tasks: [],
     };
   });
+
+  const handleAddTask = (text) => {
+    setProjectState((prevState) => {
+      const newTask = {
+        id: Math.random(),
+        text: text,
+        projectId: prevState.selectedProjectId,
+      }
+      return {
+        ...prevState,
+        tasks: [newTask, ...prevState.tasks]
+      }
+    })
+  }
+
+  const handleDeleteTask = (taskId) => {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter((task) => task.id !== taskId),
+      };
+    });
+  }
 
   //save to local storage whenever projectState changes
   useEffect(() => {
@@ -85,7 +109,10 @@ function App() {
     const project = projectState.projects.find(
       (project) => project.id === projectState.selectedProjectId
     );
-    content = <SelectedProject onCancel={cancelHandler} project={project} onDelete={handleDeleteProject} />;
+    const tasks = projectState.tasks.filter(
+      (tasks) => tasks.projectId === projectState.selectedProjectId
+    );
+    content = <SelectedProject onCancel={cancelHandler} project={project} tasks={tasks} onDelete={handleDeleteProject} onAddTask={handleAddTask} onDeleteTask={handleDeleteTask} />;
   }
 
   return (
